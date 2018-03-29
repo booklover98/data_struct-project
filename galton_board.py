@@ -1,5 +1,6 @@
 import random
 import matplotlib.pyplot as plt
+import matplotlib.animation as anim 
 import numpy as np
 
 execute = True
@@ -36,12 +37,11 @@ while execute:
             placement = location(ball())
             output = [x + y for x, y in zip(output, location(ball()))]
             num_balls -= 1
-            plt.hist(output)
-            plt.title("Galton Board")
-            plt.show()
+            plt.hist()
+            ## NOT WORKING PROPERLY!!!!
 
-    print(output)
-    plt.show()
+    while True:
+            
 
     if input("Calculate another board? [y/n]") == "n":
         execute = False
