@@ -1,27 +1,15 @@
+import kivy
+
 from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
-
-
-class LoginScreen(GridLayout):
-
-    def __init__(self, **kwargs):
-        super(LoginScreen, self).__init__(**kwargs)
-        self.cols = 2
-        self.add_widget(Label(text='User Name'))
-        self.username = TextInput(multiline=False)
-        self.add_widget(self.username)
-        self.add_widget(Label(text='password'))
-        self.password = TextInput(password=True, multiline=False)
-        self.add_widget(self.password)
-
+from kivy.uix.video import Video
 
 class MyApp(App):
-
     def build(self):
-        return LoginScreen()
-
+        video = Video(source='mymovie.mp4')
+        video.state='play'
+        video.options = {'eos': 'loop'}
+        video.allow_stretch=True
+        return video
 
 if __name__ == '__main__':
     MyApp().run()

@@ -1,3 +1,4 @@
+
 import random
 
 board_size = 7
