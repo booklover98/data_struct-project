@@ -1,3 +1,6 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 
 import random
 
@@ -6,32 +9,34 @@ board_size = 7
 def get_ball_bucket():
     return [random.choice("LR") for _ in range(board_size)].count("R")
 
-n = int(input("Enter number of balls: "))
+def galton_animate(n):
+    fig, ax = plt.subplots()
 
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-
-fig, ax = plt.subplots()
-
-simulation = [get_ball_bucket() for _ in range(n)]
-
-def animate(i):
+    # simulation = [get_ball_bucket() for _ in range(n)]
     x = range(0, board_size + 1)
-    sim = simulation[0:i]
-    arranged = {x: sim.count(x) for x in sorted(set(sim))}
-    y = [0] * (board_size + 1)
-    for k,v in arranged.items():
-        y[k] = v
-    return plt.bar (x, y)
+    simulation = [0] * (board_size + 1)
+    plot = plt.bar (x, simulation)
+
+    def animate(i):
+        if i % 1000 == 0:
+            print(i/n)
+        if i < n:
+            simulation[get_ball_bucket()] += 1 # drop a random ball
+        for bar, y in zip(plot, simulation):
+            bar.set_height(y)
+        ax.relim()
+        ax.autoscale_view(True,True,True)
 
 
+    ani = animation.FuncAnimation(fig, animate, n + 10,
+                                interval=500/n, blit=False, repeat=False)
+    # Set up formatting for the movie files
+    Writer = animation.writers['ffmpeg']
+    writer = Writer(fps=30, metadata=dict(artist='Me'), bitrate=1800)
 
-ani = animation.FuncAnimation(fig, animate, n,
-                              interval=25, blit=False)
+    ani.save(str(n) + '_balls.mp4', writer=writer)
+    print("Done simulation for " + str(n) + " balls!")
 
-# Set up formatting for the movie files
-Writer = animation.writers['ffmpeg']
-writer = Writer(fps=60, metadata=dict(artist='Me'), bitrate=1800)
-
-ani.save(str(n) + '_balls.mp4', writer=writer)
+if __name__ == "__main__":
+    for n in [100, 1000, 10000, 50000, 100000, 1000000]:
+        galton_animate(n)
