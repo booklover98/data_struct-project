@@ -10,7 +10,7 @@ while execute:
     
     start_time = time.time()
     n = int(input("Enter number of balls: "))
-    length = 6
+    length = 10
     num_balls = n
     output = [0] * (length+1)
 
