@@ -2,11 +2,13 @@ import random
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim 
 import numpy as np
+import time
 
 execute = True
 
 while execute:
     
+    start_time = time.time()
     n = int(input("Enter number of balls: "))
     length = 6
     num_balls = n
@@ -40,7 +42,9 @@ while execute:
             plt.hist()
             ## NOT WORKING PROPERLY!!!!
 
-    while True:
+    print(output)
+    end_time = time.time()
+    print(str(end_time - start_time))
             
 
     if input("Calculate another board? [y/n]") == "n":
