@@ -39,7 +39,7 @@ while execute:
             placement = location(ball())
             output = [x + y for x, y in zip(output, location(ball()))]
             num_balls -= 1
-            plt.hist()
+            plt.hist(output)
             ## NOT WORKING PROPERLY!!!!
 
     print(output)
