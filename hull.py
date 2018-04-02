@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import random
+import time
 # The "2d" cross product of two vectors:
 # a -> b, and a -> c.
 # if the vectors are in the same line or if ac is counter-clockwise of ab, returns true.
@@ -47,7 +48,12 @@ if __name__ == "__main__":
     n = int(input("Please input the number of points on the board:"))
     points = [(random.randint(-100, 100), random.randint(-100, 100))
               for _ in range(n)]
+    
+    #Set time before and after execution of algorithm
+    time_start = time.time()
     hull_points = convexHull(points)
+    time_end = time.time()
+    
     x = [p[0] for p in points]
     y = [p[1] for p in points]
     plt.plot(x, y, marker='.', linestyle='None')
@@ -59,3 +65,7 @@ if __name__ == "__main__":
 
     plt.title('Convex Hull')
     plt.show()
+
+    #Display time for algorithm to run
+    time_diff = time_end - time_start
+    print(time_diff)
