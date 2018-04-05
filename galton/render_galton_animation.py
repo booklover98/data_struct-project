@@ -1,13 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-
+import time
 import random
 
 BOARD_SIZE = 7 # how many pegs on the bottom-most row of the board
 VIDEO_LENGTH = 10  # desired video length in seconds
 FPS = 30 # frames per second for the video
-
+diff = 0
 
 def get_ball_bucket():
     # simulate a ball falling down a galton board.
@@ -38,16 +38,18 @@ def galton_animate(num_balls):
             for _ in range(balls_per_frame):
                 if ball_counter >= num_balls:
                     return
-                simulation[get_ball_bucket()] += 1  # drop a random ball
-                ball_counter += 1
+
+        simulation[get_ball_bucket()] += 1  # drop a random ball
+        ball_counter += 1
+        
         for bar, y in zip(plot, simulation):
             bar.set_height(y) # update each bar on the bar plot
         ax.relim() # rescale the numbers on the axes
         ax.autoscale_view(True, True, True) # rescale the view to the axes and data.
-
+        
     ani = animation.FuncAnimation(fig, animate, frames + FPS,
                                   interval=1/FPS, blit=False, repeat=False) # add one second of animation to see the finished board
-    
+
     # Set up formatting for the movie files
     Writer = animation.writers['ffmpeg']
     writer = Writer(fps=FPS, metadata=dict(artist='Me'), bitrate=1800)
@@ -59,5 +61,11 @@ def galton_animate(num_balls):
 
 if __name__ == "__main__":
     # create animations for each given number of balls
+    
     for n in [100, 1000, 10000, 50000, 100000, 1000000]:
+        print("#Balls: ", n)
+        timec = time.time()
         galton_animate(n)
+        timed = time.time()
+        timecd = str(timed - timec)
+        print("Simulation Time: ", timecd)
